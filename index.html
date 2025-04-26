@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Book Publishing Prompt Generator</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 20px;
+  }
+  h1 {
+    text-align: center;
+    color: #333;
+  }
+  form {
+    max-width: 800px;
+    margin: 20px auto;
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  label {
+    display: block;
+    margin-top: 15px;
+    font-weight: bold;
+  }
+  input[type="text"], textarea, select {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    box-sizing: border-box;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    font-family: Arial, sans-serif;
+  }
+  textarea {
+    resize: vertical;
+    min-height: 80px;
+  }
+  button {
+    margin-top: 20px;
+    padding: 12px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  button:hover {
+    background-color: #0056b3;
+  }
+  #result {
+    max-width: 800px;
+    margin: 30px auto;
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    white-space: pre-wrap;
+  }
+</style>
+</head>
+<body>
+
+<h1>Self-Publishing Book Prompt Generator</h1>
+
+<form id="promptForm">
+  <label for="title">Book Title:</label>
+  <input type="text" id="title" name="title" placeholder="Enter your book title" required />
+
+  <label for="genre">Genre:</label>
+  <select id="genre" name="genre" required>
+    <option value="">Select genre</option>
+    <option value="Fiction">Fiction</option>
+    <option value="Non-fiction">Non-fiction</option>
+    <option value="Fantasy">Fantasy</option>
+    <option value="Science Fiction">Science Fiction</option>
+    <option value="Mystery">Mystery</option>
+    <option value="Romance">Romance</option>
+    <option value="Thriller">Thriller</option>
+    <option value="Biography">Biography</option>
+    <option value="Self-Help">Self-Help</option>
+    <option value="Children">Children</option>
+    <!-- Add more genres as needed -->
+  </select>
+
+  <label for="targetAudience">Target Audience:</label>
+  <input type="text" id="targetAudience" name="targetAudience" placeholder="e.g., Young Adults, Professionals" />
+
+  <label for="mainTheme">Main Theme/Message:</label>
+  <textarea id="mainTheme" name="mainTheme" placeholder="Describe the core message or theme" required></textarea>
+
+  <label for="keywords">Keywords (comma-separated):</label>
+  <input type="text" id="keywords" name="keywords" placeholder="e.g., adventure, mystery, friendship" />
+
+  <label for="tone">Tone:</label>
+  <select id="tone" name="tone" required>
+    <option value="">Select tone</option>
+    <option value="Inspirational">Inspirational</option>
+    <option value="Humorous">Humorous</option>
+    <option value="Serious">Serious</option>
+    <option value="Adventurous">Adventurous</option>
+    <option value="Romantic">Romantic</option>
+    <option value="Dark">Dark</option>
+    <!-- Add more tones as needed -->
+  </select>
+
+  <label for="length">Desired Length:</label>
+  <select id="length" name="length" required>
+    <option value="">Select length</option>
+    <option value="Short (less than 50 pages)">Short (less than 50 pages)</option>
+    <option value="Medium (50-150 pages)">Medium (50-150 pages)</option>
+    <option value="Long (more than 150 pages)">Long (more than 150 pages)</option>
+  </select>
+
+  <button type="submit">Generate Prompt</button>
+</form>
+
+<div id="result" style="display:none;"></div>
+
+<script>
+  document.getElementById('promptForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    // Retrieve input values
+    const title = document.getElementById('title').value.trim();
+    const genre = document.getElementById('genre').value;
+    const targetAudience = document.getElementById('targetAudience').value.trim();
+    const mainTheme = document.getElementById('mainTheme').value.trim();
+    const keywordsInput = document.getElementById('keywords').value.trim();
+    const tone = document.getElementById('tone').value;
+    const length = document.getElementById('length').value;
+
+    // Validate required fields
+    if (!title || !genre || !mainTheme || !tone || !length) {
+      alert('Please fill in all required fields.');
+      return;
+    }
+
+    // Process keywords
+    const keywords = keywordsInput ? keywordsInput.split(',').map(k => k.trim()).filter(k => k) : [];
+
+    // Generate prompt
+    let prompt = `Create a detailed book publishing prompt with the following details:\n`;
+    prompt += `Title: ${title}\n`;
+    prompt += `Genre: ${genre}\n`;
+    if (targetAudience) prompt += `Target Audience: ${targetAudience}\n`;
+    prompt += `Main Theme/Message: ${mainTheme}\n`;
+    if (keywords.length > 0) prompt += `Keywords: ${keywords.join(', ')}\n`;
+    prompt += `Tone: ${tone}\n`;
+    prompt += `Desired Length: ${length}\n`;
+
+    // Display the prompt
+    const resultDiv = document.getElementById('result');
+    resultDiv.style.display = 'block';
+    resultDiv.textContent = prompt;
+  });
+</script>
+
+</body>
+</html>
